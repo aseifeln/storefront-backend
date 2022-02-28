@@ -1,0 +1,28 @@
+{
+  "name": "storefront_backend",
+  "version": "0.1.0",
+  "description": "",
+  "main": "server.ts",
+  "scripts": {
+    "build": "npx tsc",
+    "start": "nodemon src/server.ts",
+    "jasmine": "jasmine",
+    "test": "npm run build && npm run jasmine",
+    "integration-test": "ENV=test db-migrate --env test up && npm run test && db-migrate --env test down"
+  },
+  "author": "Ahmed Seifelnasr",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3",
+    "pg": "^8.7.3"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.5",
+    "@types/express": "^4.17.13",
+    "@types/jasmine": "^3.10.3",
+    "@types/pg": "^8.6.4",
+    "jasmine": "^4.0.2",
+    "jasmine-spec-reporter": "^7.0.0",
+    "ts-node": "^10.5.0"
+  }
+}
