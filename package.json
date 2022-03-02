@@ -13,6 +13,7 @@
   "author": "Ahmed Seifelnasr",
   "license": "ISC",
   "dependencies": {
+    "cloudinary": "^1.28.1",
     "db-migrate": "^0.11.13",
     "db-migrate-pg": "^1.2.2",
     "dotenv": "^16.0.0",
