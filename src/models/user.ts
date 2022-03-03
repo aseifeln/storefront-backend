@@ -1,8 +1,9 @@
 import Client from '../database';
 import {hashPassword, comparePassword} from '../utilities/passwordHashing';
+import {v4 as uuidv4} from 'uuid';
 
 export type User = {
-    id?: string,
+    id: string,
     firstName: string,
     lastName: string,
     email?: string | undefined,
@@ -53,20 +54,21 @@ export class UserStore {
         }
     }
 
-    async create(u: User): Promise<{firstName: string, lastName: string, username: string}> {
+    async create(u: User): Promise<{id: string, firstName: string, lastName: string, username: string}> {
         try {
+          const uuid = uuidv4();
           // @ts-ignore
           const conn = await Client.connect()
-          const sql = 'INSERT INTO users (firstName, lastName, email, billingAddress, username, password) VALUES($1, $2, $3, $4, $5, $6) RETURNING *'
+          const sql = 'INSERT INTO users (id, firstName, lastName, email, billingAddress, username, password) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *'
     
           const hash = hashPassword(u.password);
     
-          const result = await conn.query(sql, [u.firstName, u.lastName, u.email, u.billingAddress, u.username, hash])
+          const result = await conn.query(sql, [uuid, u.firstName, u.lastName, u.email, u.billingAddress, u.username, hash])
           const user = result.rows[0]
     
           conn.release()
     
-          return {"firstName": user.firstName, "lastName": user.lastName, "username": user.username}
+          return {"id": user.id,"firstName": user.firstName, "lastName": user.lastName, "username": user.username}
         } catch(err) {
           throw new Error(`Unable to create user (${u.username}): ${err}`)
         } 

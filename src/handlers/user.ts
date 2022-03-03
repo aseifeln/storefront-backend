@@ -27,6 +27,7 @@ const show = async (req: Request, res: Response) => {
 const create = async (req: Request, res: Response) => {
     try{
         const user: User = {
+            id: req.body.id,
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             email: req.body.email,
@@ -44,6 +45,7 @@ const create = async (req: Request, res: Response) => {
 const update = async (req: Request, res: Response) => {
     try{
         const user: User = {
+            id: req.params.id,
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             email: req.body.email,
