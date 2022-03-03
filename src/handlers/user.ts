@@ -1,6 +1,7 @@
 import express, {Request, Response} from 'express';
 import {User, UserStore} from '../models/user';
 import createToken from '../utilities/createToken';
+import verifyAuthToken from '../middlewares/verifyAuthToken';
 
 const store = new UserStore();
 
@@ -85,11 +86,11 @@ const authenticate = async (req: Request, res: Response) => {
 }
 
 const userRoutes = (app: express.Application) => {
-    app.get('/users', index)
-    app.get('/users/:id', show)
+    app.get('/users', verifyAuthToken, index)
+    app.get('/users/:id', verifyAuthToken, show)
     app.post('/users', create)
-    app.put('/users/:id', update)
-    app.delete('/users/:id', destroy)
+    app.put('/users/:id', verifyAuthToken, update)
+    app.delete('/users/:id', verifyAuthToken, destroy)
     app.get('/users/login', authenticate)
 }
 
