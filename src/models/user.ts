@@ -2,7 +2,7 @@ import Client from '../database';
 import {hashPassword, comparePassword} from '../utilities/passwordHashing';
 
 export type User = {
-    id: string,
+    id?: string,
     firstName: string,
     lastName: string,
     email?: string | undefined,
@@ -57,11 +57,11 @@ export class UserStore {
         try {
           // @ts-ignore
           const conn = await Client.connect()
-          const sql = 'INSERT INTO users (firstName, lastName, username, password) VALUES($1, $2, $3, $4) RETURNING *'
+          const sql = 'INSERT INTO users (firstName, lastName, email, billingAddress, username, password) VALUES($1, $2, $3, $4, $5, $6) RETURNING *'
     
           const hash = hashPassword(u.password);
     
-          const result = await conn.query(sql, [u.firstName, u.lastName, u.username, hash])
+          const result = await conn.query(sql, [u.firstName, u.lastName, u.email, u.billingAddress, u.username, hash])
           const user = result.rows[0]
     
           conn.release()
