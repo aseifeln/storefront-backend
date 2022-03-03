@@ -1,5 +1,6 @@
 import express, {Request, Response} from 'express';
 import {User, UserStore} from '../models/user';
+import createToken from '../utilities/createToken';
 
 const store = new UserStore();
 
@@ -36,7 +37,8 @@ const create = async (req: Request, res: Response) => {
             password: req.body.password,
         }
         const new_user = await store.create(user);
-        res.status(201).json(new_user);
+        const accessToken = createToken({user: new_user})
+        res.status(201).json({accessToken});
     }catch(err){
         res.status(400).json(err);
     }
@@ -75,7 +77,8 @@ const authenticate = async (req: Request, res: Response) => {
         const password = req.body.password;
         const result = await store.authenticate(username, password);
         if(result) {
-            res.status(200).json(result);
+            const accessToken = createToken({user: result})
+            res.status(200).json({accessToken});
         }else{
             res.status(400).json("User does not exist!");
         }

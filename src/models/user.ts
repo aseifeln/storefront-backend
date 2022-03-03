@@ -68,7 +68,7 @@ export class UserStore {
     
           conn.release()
     
-          return {"id": user.id,"firstName": user.firstName, "lastName": user.lastName, "username": user.username}
+          return {"id": user.id, "firstName": user.firstName, "lastName": user.lastName, "username": user.username}
         } catch(err) {
           throw new Error(`Unable to create user (${u.username}): ${err}`)
         } 
@@ -92,14 +92,15 @@ export class UserStore {
         }
     }
 
-      async authenticate(username: string, password: string): Promise<string|null> {
+      async authenticate(username: string, password: string): 
+      Promise<{id: string, firstName: string, lastName: string, username: string}|null> {
         const conn = await Client.connect();
-        const sql = 'SELECT password FROM users WHERE username = ($1)';
+        const sql = 'SELECT id, firstName, lastName, password FROM users WHERE username = ($1)';
         const result = await conn.query(sql, [username]);
         if(result.rows.length){
             const user = result.rows[0];
             if (comparePassword(password, user.password)) {
-              return "User authenticated successfully";
+                return {id: user.id, firstName: user.firstName, lastName: user.lastName, username: username};
             }
         }
         return null;
