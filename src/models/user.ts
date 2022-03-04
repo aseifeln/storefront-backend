@@ -53,7 +53,7 @@ export class UserStore {
         }
     }
 
-    async create(u: User): Promise<{id: string, first_name: string, last_name: string, username: string}> {
+    async create(u: User): Promise<{id: string, username: string}> {
         try {
           // @ts-ignore
           const conn = await Client.connect()
@@ -65,7 +65,7 @@ export class UserStore {
           const user = result.rows[0]
           conn.release()
           
-          return {id: user.id, first_name: user.first_name, last_name: user.last_name, username: user.username}
+          return {id: user.id, username: user.username}
         } catch(err) {
           throw new Error(`Unable to create user (${u.username}): ${err}`)
         } 
