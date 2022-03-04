@@ -32,10 +32,10 @@ const create = async (req: Request, res: Response) => {
         const uuid = uuidv4();
         const user: User = {
             id: uuid,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
+            first_name: req.body.firstName,
+            last_name: req.body.lastName,
             email: req.body.email,
-            billingAddress: req.body.billingAddress,
+            billing_address: req.body.billingAddress,
             username: req.body.username,
             password: req.body.password,
         }
@@ -51,10 +51,10 @@ const update = async (req: Request, res: Response) => {
     try{
         const user: User = {
             id: req.params.id,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
+            first_name: req.body.firstName,
+            last_name: req.body.lastName,
             email: req.body.email,
-            billingAddress: req.body.billingAddress,
+            billing_address: req.body.billingAddress,
             username: req.body.username,
             password: req.body.password,
         }
