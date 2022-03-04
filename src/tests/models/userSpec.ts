@@ -1,10 +1,21 @@
 import {User, UserStore} from '../../models/user';
 import {v4 as uuidv4} from 'uuid';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const store = new UserStore();
 const uuid = uuidv4();
 
 describe('User Model', () => {
+
+    const oldEnv = process.env.ENV;
+    beforeAll(() => {
+        process.env.ENV = 'test';
+    });
+    afterAll(()=> {
+        process.env.ENV = oldEnv;
+    });
     it('should have an index method', () => {
         expect(store.index).toBeDefined();
     });
@@ -52,12 +63,12 @@ describe('User Model', () => {
     })
 
     it('authenticate method should validate correct user credentials', async () => {
-        const result = await store.authenticate('mdoe', 'mypassword')
+        const result = await store.authenticate('jdoe', 'mypassword')
         expect(result).toEqual({
             id: uuid,
-            first_name: 'Mary',
+            first_name: 'John',
             last_name: 'Doe',
-            username: 'mdoe'
+            username: 'jdoe'
         })
     });
 
