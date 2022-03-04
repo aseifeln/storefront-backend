@@ -2,6 +2,7 @@ import express, {Request, Response} from 'express';
 import {User, UserStore} from '../models/user';
 import createToken from '../utilities/createToken';
 import verifyAuthToken from '../middlewares/verifyAuthToken';
+import {v4 as uuidv4} from 'uuid';
 
 const store = new UserStore();
 
@@ -28,8 +29,9 @@ const show = async (req: Request, res: Response) => {
 
 const create = async (req: Request, res: Response) => {
     try{
+        const uuid = uuidv4();
         const user: User = {
-            id: req.body.id,
+            id: uuid,
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             email: req.body.email,

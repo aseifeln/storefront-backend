@@ -49,12 +49,18 @@ class UserStore {
         try {
             // @ts-ignore
             const conn = await database_1.default.connect();
-            const sql = 'INSERT INTO users (firstName, lastName, username, password) VALUES($1, $2, $3, $4) RETURNING *';
+            const sql = 'INSERT INTO users (id, firstName, lastName, email, billingAddress, username, password) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *';
             const hash = (0, passwordHashing_1.hashPassword)(u.password);
-            const result = await conn.query(sql, [u.firstName, u.lastName, u.username, hash]);
+            const result = await conn.query(sql, [u.id, u.firstName, u.lastName, u.email, u.billingAddress, u.username, hash]);
             const user = result.rows[0];
             conn.release();
-            return { "firstName": user.firstName, "lastName": user.lastName, "username": user.username };
+            console.log(user.id);
+            console.log(user['username']);
+            console.log(user['lastname']);
+            console.log(user.email);
+            console.log(user.billingAddress);
+            console.log(user.password);
+            return { id: user.id, firstName: user.firstName, lastName: user.lastName, username: user.username };
         }
         catch (err) {
             throw new Error(`Unable to create user (${u.username}): ${err}`);
@@ -76,12 +82,12 @@ class UserStore {
     }
     async authenticate(username, password) {
         const conn = await database_1.default.connect();
-        const sql = 'SELECT password FROM users WHERE username = ($1)';
+        const sql = 'SELECT id, firstName, lastName, password FROM users WHERE username = ($1)';
         const result = await conn.query(sql, [username]);
         if (result.rows.length) {
             const user = result.rows[0];
             if ((0, passwordHashing_1.comparePassword)(password, user.password)) {
-                return "User authenticated successfully";
+                return { id: user.id, firstName: user.firstName, lastName: user.lastName, username: username };
             }
         }
         return null;

@@ -14,18 +14,18 @@ const {
 
 let client: Pool;
 
-if(ENV === 'dev'){
+if(ENV === 'test'){
     client = new Pool({
         host: POSTGRES_HOST,
         user: POSTGRES_USER,
-        database: POSTGRES_DB,
+        database: POSTGRES_TEST_DB,
         password: POSTGRES_PASSWORD
     })
 }else{
     client = new Pool({
         host: POSTGRES_HOST,
         user: POSTGRES_USER,
-        database: POSTGRES_TEST_DB,
+        database: POSTGRES_DB,
         password: POSTGRES_PASSWORD
     })   
 }
