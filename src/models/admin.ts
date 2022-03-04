@@ -10,14 +10,14 @@ export type Admin = {
 export class AdminStore {
     async create(a: Admin): Promise<{id: string, username: string}> {
         const conn = await Client.connect();
-        const sql = 'INSERT INTO admin (id, username, password VALUES ($1, $2, $3) RETURNING *';
+        const sql = 'INSERT INTO admin (id, username, password) VALUES ($1, $2, $3) RETURNING *';
         const hash = hashPassword(a.password);
         const result = await conn.query(sql, [a.id, a.username, hash]);
         const admin = result.rows[0];
 
         return {id: admin.id, username: admin.username};
     }
-    
+
     async authenticate(username: string, password: string): 
       Promise<{id: string, username: string}|null> {
         const conn = await Client.connect();
