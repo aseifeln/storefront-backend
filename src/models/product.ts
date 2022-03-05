@@ -25,17 +25,23 @@ export class ProductStore {
     async index(): Promise<Product[]> {
         try {
             const conn = await Client.connect();
-            // what should be the query??
-            const sql = 'SELECT * FROM products JOIN product_images ON products.id = product_images.product_id' 
+            const sql = 'SELECT id, name, description, category, price, stock, image_url FROM products JOIN product_images ON products.id = product_images.product_id WHERE default_image' 
             const products = await conn.query(sql)
+            conn.release();
 
             return products.rows;
-
         }catch(err) {
-            throw new Error(`Could not retireve products: ${err}`)
+            throw new Error(`Unable to retrieve products. Error: ${err}`);
         }
     }
-    //async show(id: string): Promise<Product> {}
+
+    // async show(id: string): Promise<Product> {
+    //     try {
+    //         const conn = Client.connect();
+    //     }catch(err) {
+
+    //     }
+    // }
     //async create(p: Product): Promise<string> {}
     //async update(p: Product): Promise<string> {}
     //async delete(id: string): Promise<string> {}

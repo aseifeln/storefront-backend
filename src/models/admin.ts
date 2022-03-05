@@ -15,6 +15,7 @@ export class AdminStore {
             const hash = hashPassword(a.password);
             const result = await conn.query(sql, [a.id, a.username, hash]);
             const admin = result.rows[0];
+            conn.release();
     
             return {id: admin.id, username: admin.username};
         }catch(err){
@@ -23,14 +24,17 @@ export class AdminStore {
     }
 
     async authenticate(username: string, password: string): 
-      Promise<{id: string, username: string}|null> {
+      Promise<{id: string, username: string}|string|null> {
         const conn = await Client.connect();
         const sql = 'SELECT id, password FROM admin WHERE username = ($1)';
         const result = await conn.query(sql, [username]);
+        conn.release();
         if(result.rows.length){
             const admin = result.rows[0];
             if (comparePassword(password, admin.password)) {
                 return {id: admin.id, username: username};
+            }else {
+                return `Incorrect password for user ${username}`;
             }
         }
         return null;

@@ -46,6 +46,7 @@ export class UserStore {
             const sql = 'UPDATE users SET first_name = ($1), last_name = ($2), email = ($3), billing_address = ($4), username = ($5) WHERE id = ($6) RETURNING *';
             const result = await conn.query(sql, [u.first_name, u.last_name, u.email, u.billing_address, u.username, u.id]);
             const user = result.rows[0];
+            conn.release();
 
             return user;
         }catch(err){
@@ -90,14 +91,17 @@ export class UserStore {
     }
 
       async authenticate(username: string, password: string): 
-      Promise<{id: string, first_name: string, last_name: string, username: string}|null> {
+      Promise<{id: string, first_name: string, last_name: string, username: string}|string|null> {
         const conn = await Client.connect();
         const sql = 'SELECT id, first_name, last_name, password FROM users WHERE username = ($1)';
         const result = await conn.query(sql, [username]);
+        conn.release();
         if(result.rows.length){
             const user = result.rows[0];
             if (comparePassword(password, user.password)) {
                 return {id: user.id, first_name: user.first_name, last_name: user.last_name, username: username};
+            }else {
+                return `Incorrect password for user ${username}`;
             }
         }
         return null;
