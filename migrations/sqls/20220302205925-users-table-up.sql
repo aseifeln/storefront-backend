@@ -4,7 +4,7 @@ CREATE TABLE users (
     last_name VARCHAR(100) NOT NULL,
     email VARCHAR,
     billing_address TEXT,
-    username VARCHAR NOT NULL,
+    username VARCHAR NOT NULL UNIQUE,
     password VARCHAR NOT NULL,
     PRIMARY KEY (id)
 );
