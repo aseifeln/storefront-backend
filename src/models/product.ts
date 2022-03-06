@@ -94,17 +94,13 @@ export class ProductStore {
 
     async delete(id: string): Promise<string> {
         try {
-            const sql = 'DELETE FROM products WHERE id=($1) RETURNING *'
+            const sql = 'DELETE FROM products WHERE id=($1)'
             // @ts-ignore
             const conn = await Client.connect()
-  
-            const result = await conn.query(sql, [id])
-  
-            const product = result.rows[0]
-  
+            await conn.query(sql, [id])
             conn.release()
   
-            return product.id
+            return "Product deleted successfully!"
         } catch (err) {
             throw new Error(`Unable to delete product ${id}. Error: ${err}`)
         }

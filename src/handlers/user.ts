@@ -12,8 +12,7 @@ const index = async (_req: Request, res: Response) => {
         res.status(200).json(users);
     }catch(err){
         res.status(400).json(err);
-    }
-    
+    }  
 }
 
 const show = async (req: Request, res: Response) => {
@@ -23,8 +22,7 @@ const show = async (req: Request, res: Response) => {
         res.status(200).json(user);
     }catch(err){
         res.status(400).json(err);
-    }
-    
+    } 
 }
 
 const create = async (req: Request, res: Response) => {
