@@ -7,13 +7,13 @@ const tokenSecret = process.env.TOKEN_SECRET as unknown as jwt.Secret | jwt.GetP
 
 const verifyAuthToken = (req: Request, res: Response, next: Function) => {
     try {
-        const authorizationHeader = req.headers.authorization as unknown as string
-        const token = authorizationHeader.split(' ')[1]
-        const decoded = jwt.verify(token, tokenSecret)
+        const authorizationHeader = req.headers.authorization as unknown as string;
+        const token = authorizationHeader.split(' ')[1];
+        jwt.verify(token, tokenSecret);
 
-        next()
+        next();
     } catch (error) {
-        res.status(401)
+        res.status(401);
     }
 }
 
