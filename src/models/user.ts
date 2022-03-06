@@ -22,7 +22,7 @@ export class UserStore {
 
             return users;
         }catch(err){
-            throw new Error(`Unable to get users. Error: ${err}`)
+            throw new Error(`Unable to get users. ${err}`)
         }
     }
 
@@ -36,7 +36,7 @@ export class UserStore {
 
             return user;
         }catch(Err){
-            throw new Error(`Unable to get user with id ${id}. Error: ${Err}`);
+            throw new Error(`Unable to get user with id ${id}. ${Err}`);
         }
     }
 
@@ -50,7 +50,7 @@ export class UserStore {
 
             return user;
         }catch(err){
-            throw new Error(`Unable to update user ${u.username}. Error: ${err}`);
+            throw new Error(`Unable to update user ${u.username}. ${err}`);
         }
     }
 
@@ -68,7 +68,7 @@ export class UserStore {
           
           return {id: user.id, username: user.username}
         } catch(err) {
-          throw new Error(`Unable to create user (${u.username}). Error: ${err}`)
+          throw new Error(`Unable to create user (${u.username}). ${err}`)
         } 
       }
 
@@ -86,7 +86,7 @@ export class UserStore {
   
             return user
         } catch (err) {
-            throw new Error(`Unable to delete user ${id}. Error: ${err}`)
+            throw new Error(`Unable to delete user ${id}. ${err}`)
         }
     }
 

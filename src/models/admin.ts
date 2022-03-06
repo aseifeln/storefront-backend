@@ -19,7 +19,7 @@ export class AdminStore {
     
             return {id: admin.id, username: admin.username};
         }catch(err){
-            throw new Error(`Unable to create admin ${a.username}. Error: ${err}`);
+            throw new Error(`Unable to create admin ${a.username}. ${err}`);
         }
     }
 

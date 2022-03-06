@@ -25,13 +25,13 @@ export class ProductStore {
     async index(): Promise<Product[]> {
         try {
             const conn = await Client.connect();
-            const sql = 'SELECT id, name, description, category, price, stock, image_url FROM products JOIN product_images ON products.id = product_images.product_id WHERE default_image' 
+            const sql = 'SELECT products.id, name, description, category, price, stock, image_url FROM products JOIN product_images ON products.id = product_images.product_id WHERE default_image' 
             const products = await conn.query(sql)
             conn.release();
 
             return products.rows;
         }catch(err) {
-            throw new Error(`Unable to retrieve products. Error: ${err}`);
+            throw new Error(`Unable to retrieve products. ${err}`);
         }
     }
 
@@ -57,7 +57,7 @@ export class ProductStore {
                 image_url: productImages
             }
         }catch(err) {
-            throw new Error(`Unable to retrieve product ${id}. Error: ${err}`);
+            throw new Error(`Unable to retrieve product ${id}. ${err}`);
         }
     }
 
@@ -74,7 +74,7 @@ export class ProductStore {
             conn.release();
             return {id: result.rows[0].id, name: result.rows[0].name}
         }catch(err) {
-            throw new Error(`Unable to create new product ${p.name}. Error: ${err}`);
+            throw new Error(`Unable to create new product ${p.name}. ${err}`);
         }
     }
 
@@ -88,13 +88,13 @@ export class ProductStore {
 
                  return "Product updated successfully";
              } catch(err) {
-                throw new Error(`Unable to update product ${name}. Error: ${err}`);
+                throw new Error(`Unable to update product ${name}. ${err}`);
              }
          }
 
     async delete(id: string): Promise<string> {
         try {
-            const sql = 'DELETE FROM products WHERE id=($1)'
+            const sql = 'DELETE FROM products WHERE id = ($1)'
             // @ts-ignore
             const conn = await Client.connect()
             await conn.query(sql, [id])
@@ -102,11 +102,23 @@ export class ProductStore {
   
             return "Product deleted successfully!"
         } catch (err) {
-            throw new Error(`Unable to delete product ${id}. Error: ${err}`)
+            throw new Error(`Unable to delete product ${id}. ${err}`)
         }
     }
 
     async addImage(product_id: string, image_path: string): Promise<string> {
+        try {
+            const conn = await Client.connect();
+            const productSql = 'SELECT * FROM products WHERE id = ($1)';
+            const result = await conn.query(productSql, [product_id]);
+            if(result.rows.length === 0){
+                throw new Error('Could not add image because the product does not exist');
+            }
+            conn.release();
+        } catch(err) {
+            throw new Error(`${err}`);
+        }
+        
         try {
             const conn = await Client.connect();
             const sql = 'INSERT INTO product_images (product_id, cloudinary_id, image_url, default_image) VALUES ($1, $2, $3, $4)';
@@ -116,20 +128,20 @@ export class ProductStore {
 
             return "Product image added successfully!";
         } catch(err) {
-            throw new Error(`Unable to add image for product ${product_id}. Error: ${err}`);
+            throw new Error(`Unable to add image for product ${product_id}. ${err}`);
         }
     }
 
     async productsInCategory(category: string): Promise<Product[]> {
         try {
             const conn = await Client.connect();
-            const sql = 'SELECT id, name, description, category, price, stock, image_url FROM products JOIN product_images ON products.id = product_images.product_id WHERE category = ($1) AND default_image' 
+            const sql = 'SELECT products.id, name, description, category, price, stock, image_url FROM products JOIN product_images ON products.id = product_images.product_id WHERE category = ($1) AND default_image' 
             const products = await conn.query(sql, [category])
             conn.release();
 
             return products.rows;
         }catch(err) {
-            throw new Error(`Unable to retrieve products in category ${category}. Error: ${err}`);
+            throw new Error(`Unable to retrieve products in category ${category}. ${err}`);
         }
     }
 
@@ -142,7 +154,7 @@ export class ProductStore {
 
             return products.rows;
         } catch(err) {
-            throw new Error(`Unable to retrieve top 5 products. Error: ${err}`);
+            throw new Error(`Unable to retrieve top 5 products. ${err}`);
         }
     }
 }
