@@ -21,7 +21,8 @@ export class OrderStore {
         }
     }
 
-    async addProduct(id: string, quantity: number, orderId: string, productId: string): Promise<Order> {
+    async addProduct(id: string, quantity: number, orderId: string, productId: string): 
+    Promise<{id: string, order_id: string, product_id: string, quantity: number}> {
         // get order to see if it is open
     try {
         const ordersql = 'SELECT * FROM orders WHERE id = ($1)';
@@ -58,6 +59,7 @@ export class OrderStore {
         throw new Error(`Could not add product ${productId} to order ${orderId}: ${err}`)
       }
     }
+    
     async currentOrder(user_id: string): Promise<Order> {
         try {
             const conn = await Client.connect();
