@@ -3,6 +3,7 @@ import userRoutes from './handlers/user'
 import adminRoutes from './handlers/admin'
 import productRoutes from './handlers/product'
 import orderRoutes from './handlers/order'
+import dashboardRoutes from './handlers/dashboard'
 
 const app: express.Application = express()
 const port: number = 3000
@@ -16,6 +17,8 @@ adminRoutes(app);
 productRoutes(app);
 // Expose order routes
 orderRoutes(app);
+// Expose dashboard routes
+dashboardRoutes(app);
 
 app.get('/', function (_req: Request, res: Response) {
     res.send('Hello World!')
