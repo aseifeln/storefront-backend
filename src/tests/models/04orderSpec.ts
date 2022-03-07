@@ -18,11 +18,9 @@ describe('Order model', () => {
     const oldEnv = process.env.ENV;
     beforeAll(() => {
         process.env.ENV = 'test';
-        console.log(process.env.ENV)
     });
     afterAll(()=> {
         process.env.ENV = oldEnv;
-        console.log(process.env.ENV)
     });
 
     it('create method should add an order', async () => {
