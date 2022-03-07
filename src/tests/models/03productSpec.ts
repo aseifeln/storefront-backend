@@ -11,9 +11,11 @@ describe('Product model', () => {
     const oldEnv = process.env.ENV;
     beforeAll(() => {
         process.env.ENV = 'test';
+        console.log(process.env.ENV)
     });
     afterAll(()=> {
         process.env.ENV = oldEnv;
+        console.log(process.env.ENV)
     });
 
     it('topProducts method should be defined', async () => {
