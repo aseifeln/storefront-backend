@@ -18,9 +18,9 @@ describe('Testing order endpoint responses', () => {
         const response = await request.post('/orders')
         .send({userId: userId, status: "active"})
         .set('Authorization', `BEARER ${accessToken}`)
+        orderId = response.body.id;
 
-        orderId = response.body.id
-        expect(response.status).toBe(201)
+        expect(response.status).toBe(201);
     });
 
     it('returns status code 201 for adding a product to order', async () => {
@@ -31,7 +31,7 @@ describe('Testing order endpoint responses', () => {
          productId = productResponse.body.id;
 
          const response = await request.post(`/orders/${orderId}/products`)
-         .send({orderId: orderId, productId: productId, quantity: 3})
+         .send({productId: productId, quantity: 3})
          .set('Authorization', `BEARER ${accessToken}`)
 
          expect(response.body.orderId).toEqual(orderId);

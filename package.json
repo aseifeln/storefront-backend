@@ -8,7 +8,8 @@
     "start": "nodemon src/server.ts",
     "jasmine": "ENV=test jasmine",
     "test": "npm run build && npm run jasmine",
-    "integration-test": "db-migrate --env test up && npm run test && db-migrate --env test reset"
+    "reset": "db-migrate --env test reset",
+    "integration-test": "npm run reset && db-migrate --env test up && npm run test && npm run reset"
   },
   "author": "Ahmed Seifelnasr",
   "license": "ISC",
