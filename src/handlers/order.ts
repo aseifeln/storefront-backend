@@ -10,7 +10,7 @@ const create = async (req: Request, res: Response) => {
         const uuid = uuidv4();
         const order: Order = {
             id: uuid,
-            user_id: req.body.user_id,
+            user_id: req.body.userId,
             status: req.body.status
         }
         const result = await store.create(order);
@@ -23,8 +23,8 @@ const create = async (req: Request, res: Response) => {
 const addProduct = async (req: Request, res: Response) => {
     try {
         const uuid = uuidv4();
-        const order_id = req.params.id;
-        const product_id = req.body.product_id;
+        const order_id = req.params.orderId;
+        const product_id = req.body.productId;
         const quantity = Number(req.body.quantity);
         const result = await store.addProduct(uuid, quantity, order_id, product_id);
         res.status(201).json(result);

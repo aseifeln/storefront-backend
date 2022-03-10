@@ -6,9 +6,9 @@ const request = supertest(app);
 const userStore = new UserStore();
 
 describe('Testing user endpoint responses', () => {
-    beforeAll(async () => {
-        await userStore.deleteAll();
-    });
+    // beforeAll(async () => {
+    //     await userStore.deleteAll();
+    // });
 
     let userId = '';
     let accessToken = '';
