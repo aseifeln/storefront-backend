@@ -90,8 +90,23 @@ export class UserStore {
         }
     }
 
+    async deleteAll(): Promise<boolean> {
+        try {
+            const sql = 'DELETE FROM users'
+            // @ts-ignore
+            const conn = await Client.connect()
+  
+            await conn.query(sql)
+  
+            conn.release()
+  
+            return true
+        } catch (err) {
+            throw new Error(`Unable to delete user. ${err}`)
+        }
+    }
       async authenticate(username: string, password: string): 
-      Promise<{id: string, first_name: string, last_name: string, username: string}|string|null> {
+      Promise<{id: string, username: string}|string|null> {
         const conn = await Client.connect();
         const sql = 'SELECT id, first_name, last_name, password FROM users WHERE username = ($1)';
         const result = await conn.query(sql, [username]);
@@ -99,7 +114,7 @@ export class UserStore {
         if(result.rows.length){
             const user = result.rows[0];
             if (comparePassword(password, user.password)) {
-                return {id: user.id, first_name: user.first_name, last_name: user.last_name, username: username};
+                return {id: user.id, username: username};
             }else {
                 return `Incorrect password for user ${username}`;
             }

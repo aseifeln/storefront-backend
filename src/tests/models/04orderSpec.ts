@@ -2,9 +2,6 @@ import { Order, OrderStore } from "../../models/order";
 import { User, UserStore } from "../../models/user";
 import { Product, ProductStore } from "../../models/product";
 import { v4 as uuidv4 } from 'uuid';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 const orderStore = new OrderStore();
 const userStore = new UserStore();
@@ -15,13 +12,6 @@ const orderId = uuidv4();
 const productId = uuidv4();
 
 describe('Order model', () => {
-    const oldEnv = process.env.ENV;
-    beforeAll(() => {
-        process.env.ENV = 'test';
-    });
-    afterAll(()=> {
-        process.env.ENV = oldEnv;
-    });
 
     it('create method should add an order', async () => {
         const user: User = {

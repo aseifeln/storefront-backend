@@ -39,7 +39,7 @@ const create = async (req: Request, res: Response) => {
         }
         const new_user = await store.create(user);
         const accessToken = createToken({user: new_user})
-        res.status(201).json({accessToken});
+        res.status(201).json({id: new_user.id, username: new_user.username, accessToken: accessToken});
     }catch(err){
         res.status(400).json(err);
     }

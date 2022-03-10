@@ -1,20 +1,10 @@
 import {Product, ProductStore} from '../../models/product';
 import {v4 as uuidv4} from 'uuid';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 const store = new ProductStore();
 const uuid = uuidv4();
 
 describe('Product model', () => {
-    const oldEnv = process.env.ENV;
-    beforeAll(() => {
-        process.env.ENV = 'test';
-    });
-    afterAll(()=> {
-        process.env.ENV = oldEnv;
-    });
 
     it('topProducts method should be defined', async () => {
         expect(store.topProducts).toBeDefined;
@@ -27,7 +17,7 @@ describe('Product model', () => {
             category: 'Wet Food',
             price: 32,
             stock: 50,
-            image_url: '/Users/ahmedseifelnasr/Downloads/friskies-chicken.jpeg'
+            image_url: 'assets/friskies-chicken.jpeg'
         }
         const createdProduct = await store.create(product);
         expect(createdProduct).toEqual({
@@ -48,7 +38,7 @@ describe('Product model', () => {
         expect(products.length).toEqual(1);
     });
     it('addImage method should add an image to an existing product', async () => {
-        const result = await store.addImage(uuid, '/Users/ahmedseifelnasr/Downloads/friskies-turkey.jpeg');
+        const result = await store.addImage(uuid, 'assets/friskies-turkey.jpeg');
         expect(result).toEqual("Product image added successfully!");
     });
     it('update method should edit an existing product', async () => {

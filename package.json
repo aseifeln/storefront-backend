@@ -4,9 +4,9 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "build": "npx tsc",
+    "build": "rm -rf ./build && npx tsc",
     "start": "nodemon src/server.ts",
-    "jasmine": "jasmine",
+    "jasmine": "ENV=test jasmine",
     "test": "npm run build && npm run jasmine",
     "integration-test": "db-migrate --env test up && npm run test && db-migrate --env test reset"
   },

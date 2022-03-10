@@ -1,20 +1,10 @@
 import {AdminStore} from '../../models/admin';
 import {v4 as uuidv4} from 'uuid';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 const store = new AdminStore();
 const uuid = uuidv4();
 
 describe('Admin model', () => {
-    const oldEnv = process.env.ENV;
-    beforeAll(() => {
-        process.env.ENV = 'test';
-    });
-    afterAll(()=> {
-        process.env.ENV = oldEnv;
-    });
 
     it('should have a create method', () => {
         expect(store.create).toBeDefined();
