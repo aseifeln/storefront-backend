@@ -34,7 +34,7 @@ describe('Testing order endpoint responses', () => {
          .send({productId: productId, quantity: 3})
          .set('Authorization', `BEARER ${accessToken}`)
 
-         expect(response.body.orderId).toEqual(orderId);
+         expect(response.body.order_id).toEqual(orderId);
          expect(response.status).toBe(201);
     });
 
@@ -42,7 +42,7 @@ describe('Testing order endpoint responses', () => {
         const response = await request.get(`/orders/users/${userId}/current`)
         .set('Authorization', `BEARER ${accessToken}`)
 
-        expect(response.body.orderId).toEqual(orderId);
+        expect(response.body.id).toEqual(orderId);
         expect(response.status).toBe(200);
     });
 
