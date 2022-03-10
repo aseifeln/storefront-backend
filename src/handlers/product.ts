@@ -99,7 +99,7 @@ const topProducts = async (req: Request, res: Response) => {
 const productRoutes = (app: express.Application) => {
     app.get('/products', index)
     app.get('/products/:id', show)
-    app.get('/products/:category', productsInCategory)
+    app.get('/products/category/:category', productsInCategory)
     app.get('/products/top', topProducts)
     app.post('/products', verifyAuthToken, create)
     app.post('/products/:id/image', verifyAuthToken, addImage)

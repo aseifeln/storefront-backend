@@ -5,7 +5,7 @@ import { UserStore } from '../../models/user';
 const request = supertest(app);
 const userStore = new UserStore();
 
-fdescribe('Testing user endpoint responses', () => {
+describe('Testing user endpoint responses', () => {
     beforeAll(async () => {
         await userStore.deleteAll();
     });
@@ -23,7 +23,7 @@ fdescribe('Testing user endpoint responses', () => {
 
     it('returns status code 200 for authenticating an existing user', async () => {
         const response = await request.post('/users/login')
-        .send({username: "jdoe", password: "mypassword"})
+        .send({username: "dsmith", password: "mypassword"})
         expect(response.status).toBe(200)
         
     });
