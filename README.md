@@ -1,54 +1,85 @@
 # Storefront Backend Project
 
-## Getting Started
+## Project Description
 
-This repo contains a basic Node and Express app to get you started in constructing an API. To get started, clone this repo and run `yarn` in your terminal at the project root.
+This project provides API endpoints to support an E-commerce application. Endpoints include viewing all products, viewing a specific product, adding a product to an order, and many more.
 
-## Required Technologies
-Your application must make use of the following libraries:
-- Postgres for the database
-- Node/Express for the application logic
-- dotenv from npm for managing environment variables
-- db-migrate from npm for migrations
-- jsonwebtoken from npm for working with JWTs
-- jasmine from npm for testing
+## Environment Variable Setup
 
-## Steps to Completion
+I'm using the following environment variables:
+```
+POSTGRES_HOST=127.0.0.1
+POSTGRES_USER=ahmedseifelnasr
+POSTGRES_DB=storefront
+POSTGRES_TEST_DB=storefront_test
+POSTGRES_PASSWORD=null
+ENV=dev
+TOKEN_SECRET=top-secret
+BCRYPT_PASSWORD=secret-santa
+SALT_ROUNDS=10
+CLOUD_NAME=dpftkdepn
+API_KEY=911325844553731
+API_SECRET=1g5sz4uqIJo7odnpYlidkC50niY
+```
+## Installation
 
-### 1. Plan to Meet Requirements
+### Database Setup
+- Install Postgres Server if not already installed
+- Create a database user
+- Using the SQL Shell or any interface to connect to the server (e.g pgAdmin), create two databases
+one for development and one for testing
 
-In this repo there is a `REQUIREMENTS.md` document which outlines what this API needs to supply for the frontend, as well as the agreed upon data shapes to be passed between front and backend. This is much like a document you might come across in real life when building or extending an API. 
+### Package Installation
+After cloning the repository run the following command to install the dependencies
 
-Your first task is to read the requirements and update the document with the following:
-- Determine the RESTful route for each endpoint listed. Add the RESTful route and HTTP verb to the document so that the frontend developer can begin to build their fetch requests.    
-**Example**: A SHOW route: 'blogs/:id' [GET] 
+```bash
+npm install
+```
+Run the following command to enable using the db-migrate commands directly
 
-- Design the Postgres database tables based off the data shape requirements. Add to the requirements document the database tables and columns being sure to mark foreign keys.   
-**Example**: You can format this however you like but these types of information should be provided
-Table: Books (id:varchar, title:varchar, author:varchar, published_year:varchar, publisher_id:string[foreign key to publishers table], pages:number)
+```bash
+npm install -g db-migrate
+```
+Run the following command to apply the migrations to your main database
 
-**NOTE** It is important to remember that there might not be a one to one ratio between data shapes and database tables. Data shapes only outline the structure of objects being passed between frontend and API, the database may need multiple tables to store a single shape. 
+```bash
+db-migrate up
+```
+Run the following script to start the dev server
 
-### 2.  DB Creation and Migrations
+```bash
+npm run start
+```
+Run the following script to build the typescript project
 
-Now that you have the structure of the databse outlined, it is time to create the database and migrations. Add the npm packages dotenv and db-migrate that we used in the course and setup your Postgres database. If you get stuck, you can always revisit the database lesson for a reminder. 
+```bash
+npm run build
+```
+You can then run the build server by running the following command
 
-You must also ensure that any sensitive information is hashed with bcrypt. If any passwords are found in plain text in your application it will not pass.
+```bash
+node build/server.js
+```
+### Testing
 
-### 3. Models
+Run the following command to build the project and run all the integration tests
 
-Create the models for each database table. The methods in each model should map to the endpoints in `REQUIREMENTS.md`. Remember that these models should all have test suites and mocks.
+```bash
+npm run integration-test
+```
 
-### 4. Express Handlers
+## Usage
 
-Set up the Express handlers to route incoming requests to the correct model method. Make sure that the endpoints you create match up with the enpoints listed in `REQUIREMENTS.md`. Endpoints must have tests and be CORS enabled. 
+- Start the server
 
-### 5. JWTs
+- Using Postman or other softwares, you may begin by creating a user or an admin to receive an access token which can be used for all the other endpoints that require a token
 
-Add JWT functionality as shown in the course. Make sure that JWTs are required for the routes listed in `REQUIUREMENTS.md`.
+- You may then test any of the user, product, or order endpoints by providing the appropriate data in the request body and/or request header
 
-### 6. QA and `README.md`
+- Please note that when you create a product, the image provided will be uploaded to a cloud service (namely, Cloudinary). The product Create method returns the url of the uploaded image along with the  info of the created product so you can make sure that the image was uploaded successfully
 
-Before submitting, make sure that your project is complete with a `README.md`. Your `README.md` must include instructions for setting up and running your project including how you setup, run, and connect to your database. 
 
-Before submitting your project, spin it up and test each endpoint. If each one responds with data that matches the data shapes from the `REQUIREMENTS.md`, it is ready for submission!
+## Copyright and licensing information.
+
+## Known bugs
+
