@@ -2,7 +2,7 @@
   "name": "storefront_backend",
   "version": "0.1.0",
   "description": "",
-  "main": "server.ts",
+  "main": "src/server.ts",
   "scripts": {
     "build": "rm -rf ./build && npx tsc",
     "start": "nodemon src/server.ts",

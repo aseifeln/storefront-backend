@@ -90,21 +90,6 @@ export class UserStore {
         }
     }
 
-    async deleteAll(): Promise<boolean> {
-        try {
-            const sql = 'DELETE FROM users'
-            // @ts-ignore
-            const conn = await Client.connect()
-  
-            await conn.query(sql)
-  
-            conn.release()
-  
-            return true
-        } catch (err) {
-            throw new Error(`Unable to delete user. ${err}`)
-        }
-    }
       async authenticate(username: string, password: string): 
       Promise<{id: string, username: string}|string|null> {
         const conn = await Client.connect();

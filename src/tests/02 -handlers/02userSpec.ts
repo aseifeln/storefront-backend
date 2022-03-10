@@ -1,15 +1,9 @@
 import supertest from 'supertest';
 import app from '../../server';
-import { UserStore } from '../../models/user';
 
 const request = supertest(app);
-const userStore = new UserStore();
 
 describe('Testing user endpoint responses', () => {
-    // beforeAll(async () => {
-    //     await userStore.deleteAll();
-    // });
-
     let userId = '';
     let accessToken = '';
     it('returns status code 201 for creating a new user', async () => {

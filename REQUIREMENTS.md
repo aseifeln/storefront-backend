@@ -5,32 +5,59 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 ## API Endpoints
 #### Products
-- Index 
-- Show
-- Create [token required]
-- [OPTIONAL] Top 5 most popular products 
-- [OPTIONAL] Products by category (args: product category)
+- Index [GET /products]
+- Show (args: product id) [GET /products/:id]
+- Create [token required] [POST /products]
+- Update (args: product id) [token required] [PUT /products/:id]
+- Add Image (args: product id) [token required] [POST /products/:id/image]
+- Delete (args: product id) [token required] [DELETE /products/:id]
+- Top 5 most popular products [GET /products/top]
+- Products by category (args: product category) [GET /products/category/:category]
+
+#### Admin
+- Create [POST /admin]
+- Authenticate [POST /admin/login]
 
 #### Users
-- Index [token required]
-- Show [token required]
-- Create N[token required]
+- Index [token required] [GET /users]
+- Show (args: user id) [token required] [GET /users/:id]
+- Create [POST /users]
+- Update (args: user id) [token required] [PUT /users/:id]
+- Delete (args: user id) [token required] [DELETE /users/:id]
+- Authenticate [POST /users/login]
 
 #### Orders
-- Current Order by user (args: user id)[token required]
-- [OPTIONAL] Completed Orders by user (args: user id)[token required]
+- Create [token required] [POST /orders]
+- Add Product to Order (args: order id) [token required] [POST /orders/:id/products]
+- Current Order by user (args: user id) [token required] [GET /orders/users/:id/current]
+- Completed Orders by user (args: user id) [token required] [GET /orders/users/:id/completed]
+
+#### Dashboard
+- View Products in Orders [token required] [GET /products-in-orders]
+
 
 ## Data Shapes
 #### Product
 -  id
 - name
+- description
 - price
-- [OPTIONAL] category
+- stock
+- category
+- image url of the product
+
+#### Admin
+- id
+- username
+- password
 
 #### User
 - id
 - firstName
 - lastName
+- email
+- billingAddress
+- username
 - password
 
 #### Orders
@@ -39,4 +66,10 @@ These are the notes from a meeting with the frontend developer that describe wha
 - quantity of each product in the order
 - user_id
 - status of order (active or complete)
+- date of the order
+
+## Database Schema
+
+<img src="assets/storefront_schema.png" alt="Storefront database schema" style="height: 400px; width:500px;"/>
+
 

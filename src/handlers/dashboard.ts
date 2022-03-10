@@ -10,7 +10,7 @@ const productsInOrders = async (_req: Request, res: Response) => {
 }
 
 const dashboardRoutes = (app: express.Application) => {
-    app.get('/products_in_orders', verifyAuthToken, productsInOrders)
+    app.get('/products-in-orders', verifyAuthToken, productsInOrders)
 }
 
 export default dashboardRoutes;
