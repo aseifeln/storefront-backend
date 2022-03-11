@@ -24,10 +24,34 @@ API_SECRET=1g5sz4uqIJo7odnpYlidkC50niY
 ## Installation
 
 ### Database Setup
-- Install Postgres Server if not already installed
-- Create a database user
-- Using the SQL Shell or any interface to connect to the server (e.g pgAdmin), create two databases
+Install Postgres Server if not already installed [Download link](https://www.postgresql.org/download/)
+
+Using the SQL Shell or any interface to connect to the server (e.g pgAdmin), create a database user 
+
+Example:
+
+```bash
+CREATE USER full_stack_user WITH PASSWORD 'pswd123';
+```
+
+Using the SQL Shell or any interface to connect to the server (e.g pgAdmin), create two databases
 one for development and one for testing
+
+Example:
+
+```bash
+CREATE DATABASE storefront;
+CREATE DATABASE storefront_test;
+```
+
+Grant all database privileges to the user in both databases
+
+```bash
+GRANT ALL PRIVILEGES ON DATABASE storefront TO full_stack_user;
+GRANT ALL PRIVILEGES ON DATABASE storefront_test TO full_stack_user;
+```
+
+The database is running on the default port (5432)
 
 ### Package Installation
 After cloning the repository run the following command to install the dependencies
@@ -70,7 +94,7 @@ npm run integration-test
 
 ## Usage
 
-- Start the server
+- Start the server (running on port 3000)
 
 - Using Postman or other softwares, you may begin by creating a user or an admin to receive an access token which can be used for all the other endpoints that require a token
 
