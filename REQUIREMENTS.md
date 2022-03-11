@@ -69,6 +69,93 @@ These are the notes from a meeting with the frontend developer that describe wha
 - date of the order
 
 ## Database Schema
+```
+       Table "public.admin"
+  Column  |       Type        | Collation | Nullable |      Default       
+----------+-------------------+-----------+----------+--------------------
+ id       | uuid              |           | not null | uuid_generate_v4()
+ username | character varying |           | not null | 
+ password | character varying |           | not null | 
+Indexes:
+    "admin_pkey" PRIMARY KEY, btree (id)
+    "admin_username_key" UNIQUE CONSTRAINT, btree (username)
+```
+```
+ Table "public.users"
+     Column      |          Type          | Collation | Nullable |      Default       
+-----------------+------------------------+-----------+----------+--------------------
+ id              | uuid                   |           | not null | uuid_generate_v4()
+ first_name      | character varying(100) |           | not null | 
+ last_name       | character varying(100) |           | not null | 
+ email           | character varying      |           |          | 
+ billing_address | text                   |           |          | 
+ username        | character varying      |           | not null | 
+ password        | character varying      |           | not null | 
+Indexes:
+    "users_pkey" PRIMARY KEY, btree (id)
+    "users_username_key" UNIQUE CONSTRAINT, btree (username)
+Referenced by:
+    TABLE "orders" CONSTRAINT "fk_user" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+```
+```
+Table "public.products"
+   Column    |          Type          | Collation | Nullable |      Default       
+-------------+------------------------+-----------+----------+--------------------
+ id          | uuid                   |           | not null | uuid_generate_v4()
+ name        | character varying(200) |           | not null | 
+ description | text                   |           | not null | 
+ category    | character varying(200) |           | not null | 
+ price       | numeric                |           | not null | 
+ stock       | integer                |           | not null | 
+Indexes:
+    "products_pkey" PRIMARY KEY, btree (id)
+Referenced by:
+    TABLE "product_images" CONSTRAINT "fk_product" FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+    TABLE "order_products" CONSTRAINT "fk_product" FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE SET NULL
+```
+```
+ Table "public.product_images"
+    Column     |         Type          | Collation | Nullable |      Default       
+---------------+-----------------------+-----------+----------+--------------------
+ id            | uuid                  |           | not null | uuid_generate_v4()
+ product_id    | uuid                  |           |          | 
+ cloudinary_id | character varying(50) |           | not null | 
+ image_url     | character varying     |           | not null | 
+ default_image | boolean               |           | not null | 
+Indexes:
+    "product_images_pkey" PRIMARY KEY, btree (id)
+Foreign-key constraints:
+    "fk_product" FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+```
+```
+ Table "public.orders"
+   Column   |         Type          | Collation | Nullable |      Default       
+------------+-----------------------+-----------+----------+--------------------
+ id         | uuid                  |           | not null | uuid_generate_v4()
+ user_id    | uuid                  |           |          | 
+ status     | character varying(50) |           | not null | 
+ order_date | date                  |           | not null | CURRENT_DATE
+Indexes:
+    "orders_pkey" PRIMARY KEY, btree (id)
+Foreign-key constraints:
+    "fk_user" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+Referenced by:
+    TABLE "order_products" CONSTRAINT "fk_order" FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
+```
+```
+Table "public.order_products"
+   Column   |  Type   | Collation | Nullable |      Default       
+------------+---------+-----------+----------+--------------------
+ id         | uuid    |           | not null | uuid_generate_v4()
+ order_id   | uuid    |           |          | 
+ product_id | uuid    |           |          | 
+ quantity   | integer |           | not null | 
+Indexes:
+    "order_products_pkey" PRIMARY KEY, btree (id)
+Foreign-key constraints:
+    "fk_order" FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
+    "fk_product" FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE SET NULL
+```
 
 <img src="assets/storefront_schema.png" alt="Storefront database schema" style="height: 400px; width:500px;"/>
 
