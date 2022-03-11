@@ -40,7 +40,7 @@ describe('Order model', () => {
             category: 'Wet Food',
             price: 32,
             stock: 50,
-            image_url: '/Users/ahmedseifelnasr/Downloads/friskies-chicken.jpeg'
+            image_url: 'assets/friskies-chicken.jpeg'
         }
         await productStore.create(product);
 
