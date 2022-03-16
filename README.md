@@ -6,6 +6,23 @@ This project provides API endpoints to support an E-commerce application. Endpoi
 
 ## Installation
 
+### Environment Variables
+You need to add the following variables in a .env file
+```
+POSTGRES_HOST=
+POSTGRES_USER=
+POSTGRES_DB=
+POSTGRES_TEST_DB=
+POSTGRES_PASSWORD=
+ENV=dev
+TOKEN_SECRET=
+BCRYPT_PASSWORD=
+SALT_ROUNDS=
+CLOUD_NAME=
+API_KEY=
+API_SECRET=
+```
+
 ### Database Setup
 Install Postgres Server if not already installed [Download link](https://www.postgresql.org/download/)
 
